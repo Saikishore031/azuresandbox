@@ -5,7 +5,7 @@ on:
     inputs:
       environment:
         description: 'Environment to run deployments against'
-        type: environment
+        type: choice
         required: true
         options:
           - qa

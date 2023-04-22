@@ -7,7 +7,6 @@ on:
         description: 'Environment to run deployments against'
         type: environment
         required: true
-        default: qa
       terraform_action:
         description: 'The action terraform should apply'
         type: choice

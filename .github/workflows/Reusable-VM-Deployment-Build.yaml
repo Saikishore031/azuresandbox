@@ -41,6 +41,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true   
+      
+      - name: Set Environment Variables
+        id: envvars
+        run: |
+          echo "Ensuring Environment Variables are set:"
+          echo "ARM_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}}" >> $arm_client_id
+          echo "ARM_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}}" >> $TF_VAR_arm_client_secret
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -49,17 +56,12 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-#       - name: Terraform Format
-#         id: fmt
-#         working-directory: ${{ env.WORKING_DIR }}
-#         run: terraform fmt -recursive -check
-      
+        
       - name: Run Bash Script
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run:  bash ./backends/bootstrap.sh
+        run:  bash ./bootstrap.sh
 
 
       - name: Terraform Init

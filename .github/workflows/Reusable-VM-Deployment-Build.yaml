@@ -12,6 +12,7 @@ on:
       run_bash:
         required: true
         type: string
+        default: No
       
 env:
  ARM_USE_OIDC: true
@@ -43,6 +44,7 @@ jobs:
       - name: Run Bash Script
         shell: bash
         if: inputs.run_bash == 'Yes'
+        working-directory: ${{ env.WORKING_DIR }}
         run: |
           sh ./bootstrap.sh
         

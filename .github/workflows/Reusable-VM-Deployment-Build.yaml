@@ -28,7 +28,7 @@ jobs:
  build:
     name: 'Terraform Build'
     environment: ${{inputs.build_env}} # Environment to specify which secret to use and env to deploy to
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       TF_VAR_AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_MGMT_SUBSCRIPTION_ID: ${{ secrets.MGMT_SUBSCRIPTION_ID }}
@@ -52,18 +52,13 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           install-module az -Allowclobber
-      
-      - name: Install Bash
-        shell: bash
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          install-module az -Allowclobber
 
       - name: Run Bash Script
         shell: bash
         if: inputs.run_bash == 'Yes'
         working-directory: ${{ env.WORKING_DIR }}
         run: |
+          Run Set-PSRepository PSGallery -InstallationPolicy Trusted
           sh ./bootstrap.sh
 
 

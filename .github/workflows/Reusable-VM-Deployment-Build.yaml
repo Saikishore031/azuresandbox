@@ -13,7 +13,7 @@ on:
       run_bash:
         required: true
         type: string
-        default: No
+        default: false
       
 env:
  ARM_USE_OIDC: true
@@ -51,7 +51,9 @@ jobs:
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run: bash ${{ env.WORKING_DIR }}bootstrap.sh
+        run: |
+        cd ${{ env.WORKING_DIR }}
+        ls
 
 
       - name: Checkout Repository

@@ -48,12 +48,10 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
 
       - name: Run Bash Script
-        shell: bash
+        shell: pwsh
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run: |
-          cd ${{ env.WORKING_DIR }}
-          ls
+        run: sh ./bootstrap.sh
 
 
       - name: Checkout Repository

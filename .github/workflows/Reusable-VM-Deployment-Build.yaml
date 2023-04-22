@@ -9,7 +9,7 @@ on:
       tf_action:
         required: true
         type: string
-        default: apply
+        default: plan
       run_bash:
         required: true
         type: string
@@ -51,9 +51,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run: |
-           cd ${{ env.WORKING_DIR }}
-           ./backends/bootstrap.sh
+        run:  bash ./backends/bootstrap.sh
 
 
       - name: Checkout Repository

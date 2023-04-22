@@ -50,9 +50,7 @@ jobs:
       - name: Run Bash Script
         shell: bash
         if: inputs.run_bash == 'Yes'
-        working-directory: ${{ env.WORKING_DIR }}
-        run: |
-          bootstrap.sh
+        run: ${{ env.WORKING_DIR }}/bootstrap.sh
 
 
       - name: Checkout Repository

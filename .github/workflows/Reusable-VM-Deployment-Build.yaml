@@ -5,6 +5,7 @@ on:
       build_env:
         required: true
         type: string
+        default: qa
       tf_action:
         required: true
         type: string

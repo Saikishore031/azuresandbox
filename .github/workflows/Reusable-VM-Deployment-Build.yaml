@@ -9,6 +9,9 @@ on:
         required: true
         type: string
         default: apply
+      run_bash:
+        required: true
+        type: string
       
 env:
  ARM_USE_OIDC: true
@@ -36,6 +39,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
+          
+      - name: Run Bash Script
+        shell: bash
+        if: inputs.run_bash == 'Yes'
+        run: |
+          sh ./bootstrap.sh
+        
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

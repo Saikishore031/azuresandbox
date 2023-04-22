@@ -1,0 +1,42 @@
+name: VM Deployment Recipe Pipeline
+
+on:
+ workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run deployments against'
+        type: environment
+        required: true
+        default: qa
+      terraform_action:
+        description: 'The action terraform should apply'
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+        required: true
+        default: 'apply'
+ push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/Reusable-*'
+ pull_request:
+    branches:
+      - feature/**
+    paths:
+      - '.github/workflows/Reusable-*'
+
+permissions:
+      id-token: write
+      contents: read
+      pull-requests: "write"
+
+jobs:
+ build:
+    uses: ./.github/workflows/Reusable-VM-Deployment-Build.yaml
+    with:
+      build_env: ${{ github.event.inputs.environment }}
+      tf_action: ${{ github.event.inputs.terraform_action }}
+    secrets: inherit

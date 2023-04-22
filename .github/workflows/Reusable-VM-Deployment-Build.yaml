@@ -46,20 +46,13 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TF_VERSION }}
-          
-      - name: Install Powershell
-        shell: pwsh
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          install-module az -Allowclobber
 
       - name: Run Bash Script
         shell: bash
         if: inputs.run_bash == 'Yes'
         working-directory: ${{ env.WORKING_DIR }}
         run: |
-          Run Set-PSRepository PSGallery -InstallationPolicy Trusted
-          sh ./bootstrap.sh
+          bootstrap.sh
 
 
       - name: Checkout Repository

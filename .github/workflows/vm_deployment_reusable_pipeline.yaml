@@ -25,8 +25,8 @@ on:
          description: 'To run the bash'
          type: choice
          options:
-          - Yes
-          - No
+          - true
+          - false
          required: true
  push:
     branches:

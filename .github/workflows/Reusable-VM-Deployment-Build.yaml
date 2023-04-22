@@ -51,7 +51,7 @@ jobs:
         shell: pwsh
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run: sh ./bootstrap.sh
+        run: sh ./backends/bootstrap.sh
 
 
       - name: Checkout Repository

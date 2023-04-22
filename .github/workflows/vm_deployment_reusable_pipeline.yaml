@@ -7,6 +7,10 @@ on:
         description: 'Environment to run deployments against'
         type: environment
         required: true
+        options:
+          - qa
+          - prod
+          - dev
       terraform_action:
         description: 'The action terraform should apply'
         type: choice

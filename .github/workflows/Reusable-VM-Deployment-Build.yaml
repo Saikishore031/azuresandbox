@@ -47,13 +47,6 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Run Bash Script
-        shell: bash
-        working-directory: ${{ env.WORKING_DIR }}
-        if: inputs.run_bash == 'true'
-        run:  bash ./backends/bootstrap.sh
-
-
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -61,6 +54,13 @@ jobs:
 #         id: fmt
 #         working-directory: ${{ env.WORKING_DIR }}
 #         run: terraform fmt -recursive -check
+      
+      - name: Run Bash Script
+        shell: bash
+        working-directory: ${{ env.WORKING_DIR }}
+        if: inputs.run_bash == 'true'
+        run:  bash ./backends/bootstrap.sh
+
 
       - name: Terraform Init
         id: init

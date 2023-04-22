@@ -53,7 +53,6 @@ jobs:
         if: inputs.run_bash == 'true'
         run: |
         cd ${{ env.WORKING_DIR }}
-        ls
 
 
       - name: Checkout Repository

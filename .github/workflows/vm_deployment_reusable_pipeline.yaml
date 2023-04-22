@@ -28,16 +28,16 @@ on:
           - true
           - false
          required: true
- push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/Reusable-*'
- pull_request:
-    branches:
-      - feature/**
-    paths:
-      - '.github/workflows/Reusable-*'
+#  push:
+#     branches:
+#       - main
+#     paths:
+#       - '.github/workflows/Reusable-*'
+#  pull_request:
+#     branches:
+#       - feature/**
+#     paths:
+#       - '.github/workflows/Reusable-*'
 
 permissions:
       id-token: write

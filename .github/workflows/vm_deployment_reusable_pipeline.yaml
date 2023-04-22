@@ -11,6 +11,7 @@ on:
           - qa
           - prod
           - dev
+        default: 'qa'
       terraform_action:
         description: 'The action terraform should apply'
         type: choice

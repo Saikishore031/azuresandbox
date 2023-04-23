@@ -19,7 +19,7 @@ env:
  ARM_USE_OIDC: true
  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
- ARM_CLIENT_ID: ${{ var.AZURE_CLIENT_ID }}
+ ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
  WORKING_DIR: ./
  TF_VERSION: 1.3.0
  
@@ -37,7 +37,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ var.AZURE_CLIENT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true   
@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           echo "Ensuring Environment Variables are set:"
-          export "arm_client_id=${{ var.AZURE_CLIENT_ID }}"
+          export "arm_client_id=${{ vars.AZURE_CLIENT_ID }}"
           export "arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
           echo "$arm_client_id"
           echo "$arm_client_secret"
@@ -65,7 +65,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
         run:  | 
-          export "arm_client_id=${{ var.AZURE_CLIENT_ID }}"
+          export "arm_client_id=${{ vars.AZURE_CLIENT_ID }}"
           export "arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
           echo "$arm_client_id"
           echo "$arm_client_secret"
@@ -81,22 +81,22 @@ jobs:
       #   id: plan_apply
       #   working-directory: ${{ env.WORKING_DIR }}
       #   if: inputs.tf_action == 'apply' || inputs.tf_action == 'plan'
-      #   run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ var.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+      #   run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ vars.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
 
       # - name: Terraform Apply
       #   id: apply
       #   working-directory: ${{ env.WORKING_DIR }}
       #   if: inputs.tf_action == 'apply'
-      #   run: terraform apply -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ var.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
+      #   run: terraform apply -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ vars.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
 
       # - name: Terraform Plan Destroy
       #   id: plan_destroy
       #   working-directory: ${{ env.WORKING_DIR }}
       #   if: inputs.tf_action == 'destroy'
-      #   run: terraform plan -destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ var.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+      #   run: terraform plan -destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ vars.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
 
       # - name: Terraform Destroy
       #   id: destroy
       #   working-directory: ${{ env.WORKING_DIR }}
       #   if: inputs.tf_action == 'destroy'
-      #   run: terraform destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ var.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
+      #   run: terraform destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ vars.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve

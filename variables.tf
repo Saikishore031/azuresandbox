@@ -18,16 +18,16 @@ variable "adds_domain_name" {
 #   description = "The name of the key vault secret containing the admin username"
 # }
 
-variable "arm_client_id" {
-  type        = string
-  description = "The AppId of the service principal used for authenticating with Azure. Must have a 'Contributor' role assignment."
-}
+# variable "arm_client_id" {
+#   type        = string
+#   description = "The AppId of the service principal used for authenticating with Azure. Must have a 'Contributor' role assignment."
+# }
 
-variable "arm_client_secret" {
-  type        = string
-  description = "The password for the service principal used for authenticating with Azure. Set interactively or using an environment variable 'TF_VAR_arm_client_secret'."
-  sensitive   = true
-}
+# variable "arm_client_secret" {
+#   type        = string
+#   description = "The password for the service principal used for authenticating with Azure. Set interactively or using an environment variable 'TF_VAR_arm_client_secret'."
+#   sensitive   = true
+# }
 
 variable "automation_account_name" {
   type        = string

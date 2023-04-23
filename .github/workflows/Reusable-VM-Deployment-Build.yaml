@@ -63,13 +63,9 @@ jobs:
       - name: Run Bash Script
         shell: bash
         env:
-          arm_client_id: ${{ secrets.AZURE_CLIENT_ID }}
-          arm_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          arm_client_id: ${{ env.AZURE_CLIENT_ID }}
         if: inputs.run_bash == 'true'
         run:  | 
-          export "arm_client_id:${{ vars.AZURE_CLIENT_ID }}"
-          export "arm_client_secret:${{ secrets.AZURE_CLIENT_SECRET }}"
-          echo "$arm_client_id"
           echo "$arm_client_secret"
           bash ./terraform-azurerm-vnet-shared/bootstrap.sh
 

@@ -47,8 +47,8 @@ jobs:
         shell: bash
         run: |
           echo "Ensuring Environment Variables are set:"
-          export "arm_client_id:${{ secrets.AZURE_CLIENT_ID }}"
-          export "arm_client_secret:${{ secrets.AZURE_CLIENT_SECRET }}"
+          export "arm_client_id:${{ env.AZURE_CLIENT_ID }}"
+          export "arm_client_secret:${{ env.AZURE_CLIENT_SECRET }}"
           echo "$arm_client_id"
           echo "$arm_client_secret"
       

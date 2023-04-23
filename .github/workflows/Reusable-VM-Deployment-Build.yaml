@@ -42,12 +42,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true   
       
-      # - name: Set Environment Variables
-      #   id: envvars
-      #   run: |
-      #     echo "Ensuring Environment Variables are set:"
-      #     echo "ARM_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}}" >> $arm_client_id
-      #     echo "ARM_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}}" >> $TF_VAR_arm_client_secret
+      - name: Set Environment Variables
+        id: envvars
+        run: |
+          echo "Ensuring Environment Variables are set:"
+          echo "arm_client_id=${{secrets.AZURE_CLIENT_ID}}"
+          echo "arm_client_secret=${{secrets.AZURE_CLIENT_SECRET}}"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

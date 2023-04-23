@@ -64,7 +64,10 @@ jobs:
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run:  bash ./terraform-azurerm-vnet-shared/bootstrap.sh
+        run:  | 
+          echo "$arm_client_id"
+          echo "$arm_client_secret"
+          bash ./terraform-azurerm-vnet-shared/bootstrap.sh
 
 
       # - name: Terraform Init

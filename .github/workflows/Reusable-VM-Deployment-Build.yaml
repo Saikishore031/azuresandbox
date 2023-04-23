@@ -56,12 +56,12 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v3
-        
+
       - name: Run Bash Script
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.run_bash == 'true'
-        run:  bash ./bootstrap.sh
+        run:  bash ./terraform-azurerm-vnet-shared/bootstrap.sh
 
 
       - name: Terraform Init

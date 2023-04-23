@@ -46,8 +46,15 @@ jobs:
         id: envvars
         run: |
           echo "Ensuring Environment Variables are set:"
-          export "arm_client_id=${{secrets.AZURE_CLIENT_ID}}"
-          export "arm_client_secret=${{secrets.AZURE_CLIENT_SECRET}}"
+          export "arm_client_id=${{ secrets.AZURE_CLIENT_ID }}"
+          export "arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
+      
+      - name: Set Environment Variables
+        id: envvars
+        run: |
+          echo "Ensuring Environment Variables are set:"
+          echo "$(arm_client_id)"
+          echo "$(arm_client_secret)"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -64,31 +71,31 @@ jobs:
         run:  bash ./terraform-azurerm-vnet-shared/bootstrap.sh
 
 
-      - name: Terraform Init
-        id: init
-        working-directory: ${{ env.WORKING_DIR }}
-        run: terraform init -backend-config=./backends/${{ inputs.build_env }}.conf
+      # - name: Terraform Init
+      #   id: init
+      #   working-directory: ${{ env.WORKING_DIR }}
+      #   run: terraform init -backend-config=./backends/${{ inputs.build_env }}.conf
 
-      - name: Terraform Plan Apply
-        id: plan_apply
-        working-directory: ${{ env.WORKING_DIR }}
-        if: inputs.tf_action == 'apply' || inputs.tf_action == 'plan'
-        run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+      # - name: Terraform Plan Apply
+      #   id: plan_apply
+      #   working-directory: ${{ env.WORKING_DIR }}
+      #   if: inputs.tf_action == 'apply' || inputs.tf_action == 'plan'
+      #   run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
 
-      - name: Terraform Apply
-        id: apply
-        working-directory: ${{ env.WORKING_DIR }}
-        if: inputs.tf_action == 'apply'
-        run: terraform apply -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
+      # - name: Terraform Apply
+      #   id: apply
+      #   working-directory: ${{ env.WORKING_DIR }}
+      #   if: inputs.tf_action == 'apply'
+      #   run: terraform apply -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
 
-      - name: Terraform Plan Destroy
-        id: plan_destroy
-        working-directory: ${{ env.WORKING_DIR }}
-        if: inputs.tf_action == 'destroy'
-        run: terraform plan -destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+      # - name: Terraform Plan Destroy
+      #   id: plan_destroy
+      #   working-directory: ${{ env.WORKING_DIR }}
+      #   if: inputs.tf_action == 'destroy'
+      #   run: terraform plan -destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
 
-      - name: Terraform Destroy
-        id: destroy
-        working-directory: ${{ env.WORKING_DIR }}
-        if: inputs.tf_action == 'destroy'
-        run: terraform destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve
+      # - name: Terraform Destroy
+      #   id: destroy
+      #   working-directory: ${{ env.WORKING_DIR }}
+      #   if: inputs.tf_action == 'destroy'
+      #   run: terraform destroy -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -auto-approve

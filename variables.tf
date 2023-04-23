@@ -29,10 +29,10 @@ variable "adds_domain_name" {
 #   sensitive   = true
 # }
 
-variable "automation_account_name" {
-  type        = string
-  description = "The name of the Azure Automation Account use for state configuration (DSC)."
-}
+# variable "automation_account_name" {
+#   type        = string
+#   description = "The name of the Azure Automation Account use for state configuration (DSC)."
+# }
 
 variable "key_vault_id" {
   type        = string

@@ -44,18 +44,14 @@ jobs:
       
       - name: Set Environment Variables
         id: envvars
+        shell: bash
         run: |
           echo "Ensuring Environment Variables are set:"
           export "arm_client_id=${{ secrets.AZURE_CLIENT_ID }}"
           export "arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
-      
-      - name: Set Environment Variables
-        id: echo
-        run: |
-          echo "Ensuring Environment Variables are set:"
           echo "$arm_client_id"
           echo "$arm_client_secret"
-
+      
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:

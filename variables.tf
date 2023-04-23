@@ -29,6 +29,8 @@ variable "arm_client_secret" {
   sensitive   = true
 }
 
+variable "vm_adds_name" {}
+
 # variable "automation_account_name" {
 #   type        = string
 #   description = "The name of the Azure Automation Account use for state configuration (DSC)."

@@ -61,8 +61,9 @@ jobs:
       - name: Run Bash Script
         shell: bash
         if: inputs.run_bash == 'true'
+        env:
+          arm_client_id: ${{ env.ARM_CLIENT_ID }}
         run:  | 
-          export "arm_client_id=${{ env.ARM_CLIENT_ID }}"
           echo "$arm_client_id"
           bash ./terraform-azurerm-vnet-shared/bootstrap.sh $arm_client_id
 

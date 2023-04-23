@@ -76,7 +76,7 @@ jobs:
         id: plan_apply
         working-directory: ${{ env.WORKING_DIR }}
         if: inputs.tf_action == 'apply' || inputs.tf_action == 'plan'
-        run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var TF_VAR_arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+        run: terraform plan -var-file=./environments/${{ inputs.build_env }}.tfvars -var arm_client_id=${{ secrets.AZURE_CLIENT_ID }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} -var arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Terraform Apply
         id: apply

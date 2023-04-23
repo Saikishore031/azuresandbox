@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           echo "Ensuring Environment Variables are set:"
-          export "arm_client_id:${{ env.ARM_CLIENT_ID }}"
+          export "arm_client_id=${{ env.ARM_CLIENT_ID }}"
           echo "$arm_client_id"
       
       - name: Setup Terraform

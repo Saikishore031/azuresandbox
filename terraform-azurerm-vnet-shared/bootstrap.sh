@@ -126,7 +126,7 @@ default_vnet_address_space="10.1.0.0/16"
 default_vnet_name="vnet-shared-01"
 
 # Get user input
-read -e -i                                                    -p "Service principal appId (arm_client_id) ---------------------------------------------: " arm_client_id
+read -e -i $arm_client_id                                                      -p "Service principal appId (arm_client_id) ---------------------------------------------: " arm_client_id
 read -e -i $default_aad_tenant_id                             -p "Azure AD tenant id (aad_tenant_id) --------------------------------------------------: " aad_tenant_id
 read -e -i $default_owner_object_id                           -p "Object id for Azure CLI signed in user (owner_object_id) ----------------------------: " owner_object_id
 read -e -i $default_subscription_id                           -p "Azure subscription id (subscription_id) ---------------------------------------------: " subscription_id
@@ -246,7 +246,9 @@ if [ -n "$key_vault_name" ]
 then
   printf "Found key vault '$key_vault_name'...\n"
 else
-  key_vault_name=kv-$(tr -dc "[:lower:][:digit:]" < /dev/urandom | head -c 15)
+  export LC_CTYPE=C
+  key_vault_name=kv$(tr -dc "[:lower:][:digit:]" < /dev/urandom | head -c 13)
+  #key_vault_name=kv-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1);
   printf "Creating keyvault '$key_vault_name' in resource group '$resource_group_name'...\n"
   az keyvault create \
     --subscription $subscription_id \

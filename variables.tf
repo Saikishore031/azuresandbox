@@ -91,11 +91,13 @@ variable "vm_devops_win_image_version" {
 variable "vm_devops_win_instances" {
   type        = number
   description = "The nunber of devops agent VMs to provision."
+  default     = 2
 }
 
 variable "vm_devops_win_name" {
   type        = string
   description = "The name of the devops agent VM."
+  default     = "devops"
 }
 
 variable "vm_devops_win_size" {

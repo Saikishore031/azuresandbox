@@ -20,5 +20,3 @@ tags                                      = {
 vm_adds_name                              = "adds1"
 vnet_address_space                        = "10.1.0.0/16"
 vnet_name                                 = "vnet-shared-01"
-vm_devops_win_name                        = "devops"
-vm_devops_win_instances                   = 2

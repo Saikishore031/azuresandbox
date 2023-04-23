@@ -11,11 +11,13 @@ variable "adds_domain_name" {
 variable "admin_password_secret" {
    type        = string
    description = "The name of the key vault secret containing the admin password"
+   default      = "bootstrap"
 }
 
 variable "admin_username_secret" {
    type        = string
    description = "The name of the key vault secret containing the admin username"
+   defualt     = "bootstrap"
 }
 
 variable "arm_client_id" {

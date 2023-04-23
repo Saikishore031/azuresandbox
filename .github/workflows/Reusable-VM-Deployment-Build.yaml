@@ -50,7 +50,7 @@ jobs:
           export "arm_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
       
       - name: Set Environment Variables
-        id: envvars
+        id: echo
         run: |
           echo "Ensuring Environment Variables are set:"
           echo "$(arm_client_id)"

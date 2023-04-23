@@ -53,8 +53,8 @@ jobs:
         id: echo
         run: |
           echo "Ensuring Environment Variables are set:"
-          echo "$(arm_client_id)"
-          echo "$(arm_client_secret)"
+          echo "$arm_client_id"
+          echo "$arm_client_secret"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

@@ -20,7 +20,7 @@ on:
           - apply
           - destroy
         required: true
-        default: 'apply'
+        default: 'plan'
       run_bash:
          description: 'To run the bash'
          type: choice

@@ -8,15 +8,15 @@ variable "adds_domain_name" {
   description = "The AD DS domain name."
 }
 
-# variable "admin_password_secret" {
-#   type        = string
-#   description = "The name of the key vault secret containing the admin password"
-# }
+variable "admin_password_secret" {
+   type        = string
+   description = "The name of the key vault secret containing the admin password"
+}
 
-# variable "admin_username_secret" {
-#   type        = string
-#   description = "The name of the key vault secret containing the admin username"
-# }
+variable "admin_username_secret" {
+   type        = string
+   description = "The name of the key vault secret containing the admin username"
+}
 
 variable "arm_client_id" {
   type        = string

@@ -20,3 +20,5 @@ tags                                      = {
 vm_adds_name                              = "adds1"
 vnet_address_space                        = "10.1.0.0/16"
 vnet_name                                 = "vnet-shared-01"
+admin_password_secret                     = "bootstrap"
+admin_username_secret                     = "bootstrap"

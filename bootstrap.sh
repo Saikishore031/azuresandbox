@@ -117,7 +117,7 @@ default_dns_server="10.1.1.4"
 default_environment="dev"
 default_location="eastus"
 default_project="#AzureSandbox"
-default_resource_group_name="rg-sandbox-01"
+default_resource_group_name="rg-sandbox-04"
 default_skip_admin_password_gen="no"
 default_subnet_adds_address_prefix="10.1.1.0/24"
 default_subnet_AzureBastionSubnet_address_prefix="10.1.0.0/27"
@@ -126,7 +126,7 @@ default_vnet_address_space="10.1.0.0/16"
 default_vnet_name="vnet-shared-01"
 
 # Get user input
-read -e -i                                                    -p "Service principal appId (arm_client_id) ---------------------------------------------: " arm_client_id
+read -e -i $arm_client_id                                                      -p "Service principal appId (arm_client_id) ---------------------------------------------: " arm_client_id
 read -e -i $default_aad_tenant_id                             -p "Azure AD tenant id (aad_tenant_id) --------------------------------------------------: " aad_tenant_id
 read -e -i $default_owner_object_id                           -p "Object id for Azure CLI signed in user (owner_object_id) ----------------------------: " owner_object_id
 read -e -i $default_subscription_id                           -p "Azure subscription id (subscription_id) ---------------------------------------------: " subscription_id
@@ -166,29 +166,29 @@ vnet_address_space=${vnet_address_space:-$default_vnet_address_space}
 vnet_name=${vnet_name:=$default_vnet_name}
 
 # Validate arm_client_id
-if [ -z "$arm_client_id" ]
-then
-  printf "arm_client_id is required.\n"
-  usage
-fi
+# if [ -z "$arm_client_id" ]
+# then
+#   printf "arm_client_id is required.\n"
+#   usage
+# fi
 
-# Validate TF_VAR_arm_client_secret
-if [ -z "$TF_VAR_arm_client_secret" ]
-then
-  printf "Environment variable 'TF_VAR_arm_client_secret' must be set.\n"
-  usage
-fi
+# # Validate TF_VAR_arm_client_secret
+# if [ -z "$TF_VAR_arm_client_secret" ]
+# then
+#   printf "Environment variable 'TF_VAR_arm_client_secret' must be set.\n"
+#   usage
+# fi
 
-# Validate service principal
-arm_client_display_name=$(az ad sp show --id $arm_client_id --query "appDisplayName" --output tsv)
+# # Validate service principal
+# arm_client_display_name=$(az ad sp show --id $arm_client_id --query "appDisplayName" --output tsv)
 
-if [ -n "$arm_client_display_name" ]
-then 
-  printf "Found service principal '$arm_client_display_name'...\n"
-else
-  printf "Invalid service principal AppId '$arm_client_id'...\n"
-  usage
-fi
+# if [ -n "$arm_client_display_name" ]
+# then 
+#   printf "Found service principal '$arm_client_display_name'...\n"
+# else
+#   printf "Invalid service principal AppId '$arm_client_id'...\n"
+#   usage
+# fi
 
 # Validate subscription
 subscription_name=$(az account list --query "[?id=='$subscription_id'].name" --output tsv)
@@ -246,7 +246,9 @@ if [ -n "$key_vault_name" ]
 then
   printf "Found key vault '$key_vault_name'...\n"
 else
-  key_vault_name=kv-$(tr -dc "[:lower:][:digit:]" < /dev/urandom | head -c 15)
+  export LC_CTYPE=C
+  key_vault_name=kv$(tr -dc "[:lower:][:digit:]" < /dev/urandom | head -c 13)
+  #key_vault_name=kv-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1);
   printf "Creating keyvault '$key_vault_name' in resource group '$resource_group_name'...\n"
   az keyvault create \
     --subscription $subscription_id \
@@ -364,26 +366,26 @@ tags="${tags}}"
 # Generate terraform.tfvars file
 printf "\nGenerating terraform.tfvars file...\n\n"
 
-printf "aad_tenant_id                             = \"$aad_tenant_id\"\n"                             > ./terraform.tfvars
-printf "adds_domain_name                          = \"$adds_domain_name\"\n"                          >> ./terraform.tfvars
-printf "arm_client_id                             = \"$arm_client_id\"\n"                             >> ./terraform.tfvars
-printf "dns_server                                = \"$dns_server\"\n"                                >> ./terraform.tfvars
-printf "key_vault_id                              = \"$key_vault_id\"\n"                              >> ./terraform.tfvars
-printf "key_vault_name                            = \"$key_vault_name\"\n"                            >> ./terraform.tfvars
-printf "location                                  = \"$location\"\n"                                  >> ./terraform.tfvars
-printf "resource_group_name                       = \"$resource_group_name\"\n"                       >> ./terraform.tfvars
-printf "storage_account_key_kerb_secret           = \"$storage_account_name-kerb1\"\n"                >> ./terraform.tfvars
-printf "storage_account_name                      = \"$storage_account_name\"\n"                      >> ./terraform.tfvars
-printf "storage_container_name                    = \"$storage_container_name\"\n"                    >> ./terraform.tfvars
-printf "subnet_adds_address_prefix                = \"$subnet_adds_address_prefix\"\n"                >> ./terraform.tfvars
-printf "subnet_AzureBastionSubnet_address_prefix  = \"$subnet_AzureBastionSubnet_address_prefix\"\n"  >> ./terraform.tfvars
-printf "subscription_id                           = \"$subscription_id\"\n"                           >> ./terraform.tfvars
-printf "tags                                      = $tags\n"                                          >> ./terraform.tfvars
-printf "vm_adds_name                              = \"$vm_adds_name\"\n"                              >> ./terraform.tfvars
-printf "vnet_address_space                        = \"$vnet_address_space\"\n"                        >> ./terraform.tfvars
-printf "vnet_name                                 = \"$vnet_name\"\n"                                 >> ./terraform.tfvars
+printf "aad_tenant_id                             = \"$aad_tenant_id\"\n"                             > ./environments/qa.tfvars
+printf "adds_domain_name                          = \"$adds_domain_name\"\n"                          >> ./environments/qa.tfvars
+printf "arm_client_id                             = \"$arm_client_id\"\n"                             >> ./environments/qa.tfvars
+printf "dns_server                                = \"$dns_server\"\n"                                >> ./environments/qa.tfvars
+printf "key_vault_id                              = \"$key_vault_id\"\n"                              >> ./environments/qa.tfvars
+printf "key_vault_name                            = \"$key_vault_name\"\n"                            >> ./environments/qa.tfvars
+printf "location                                  = \"$location\"\n"                                  >> ./environments/qa.tfvars
+printf "resource_group_name                       = \"$resource_group_name\"\n"                       >> ./environments/qa.tfvars
+printf "storage_account_key_kerb_secret           = \"$storage_account_name-kerb1\"\n"                >> ./environments/qa.tfvars
+printf "storage_account_name                      = \"$storage_account_name\"\n"                      >> ./environments/qa.tfvars
+printf "storage_container_name                    = \"$storage_container_name\"\n"                    >> ./environments/qa.tfvars
+printf "subnet_adds_address_prefix                = \"$subnet_adds_address_prefix\"\n"                >> ./environments/qa.tfvars
+printf "subnet_AzureBastionSubnet_address_prefix  = \"$subnet_AzureBastionSubnet_address_prefix\"\n"  >> ./environments/qa.tfvars
+printf "subscription_id                           = \"$subscription_id\"\n"                           >> ./environments/qa.tfvars
+printf "tags                                      = $tags\n"                                          >> ./environments/qa.tfvars
+printf "vm_adds_name                              = \"$vm_adds_name\"\n"                              >> ./environments/qa.tfvars
+printf "vnet_address_space                        = \"$vnet_address_space\"\n"                        >> ./environments/qa.tfvars
+printf "vnet_name                                 = \"$vnet_name\"\n"                                 >> ./environments/qa.tfvars
 
-cat ./terraform.tfvars
+cat ./environments/qa.tfvars
 
 printf "\nReview defaults in \"variables.tf\" prior to applying Terraform configurations...\n"
 printf "\nBootstrapping complete...\n"

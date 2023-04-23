@@ -86,6 +86,10 @@ resource "azurerm_windows_virtual_machine" "vm_devops_win" {
   }
 }
 
+data "azurerm_subnet" "subnet" {
+  name = "default"
+  virtual_network_name = "POC01"
+}
 # Nic
 resource "azurerm_network_interface" "vm_devops_win_nic" {
   for_each            = toset(local.vm_devops_win_names)
@@ -96,7 +100,7 @@ resource "azurerm_network_interface" "vm_devops_win_nic" {
 
   ip_configuration {
     name                          = "ipc-${each.key}"
-    subnet_id                     = var.vnet_app_01_subnets["snet-app-01"].id
+    subnet_id                     = data.azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
   }
 }

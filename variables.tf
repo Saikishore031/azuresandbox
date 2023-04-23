@@ -112,7 +112,7 @@ variable "vm_devops_win_storage_account_type" {
   default     = "StandardSSD_LRS"
 }
 
-variable "vnet_app_01_subnets" {
-  type        = map(any)
-  description = "The existing subnets defined in the application virtual network."
-}
+# variable "vnet_app_01_subnets" {
+#   type        = map(any)
+#   description = "The existing subnets defined in the application virtual network."
+# }

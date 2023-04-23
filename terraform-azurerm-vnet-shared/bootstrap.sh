@@ -166,29 +166,29 @@ vnet_address_space=${vnet_address_space:-$default_vnet_address_space}
 vnet_name=${vnet_name:=$default_vnet_name}
 
 # Validate arm_client_id
-if [ -z "$arm_client_id" ]
-then
-  printf "arm_client_id is required.\n"
-  usage
-fi
+# if [ -z "$arm_client_id" ]
+# then
+#   printf "arm_client_id is required.\n"
+#   usage
+# fi
 
-# Validate TF_VAR_arm_client_secret
-if [ -z "$TF_VAR_arm_client_secret" ]
-then
-  printf "Environment variable 'TF_VAR_arm_client_secret' must be set.\n"
-  usage
-fi
+# # Validate TF_VAR_arm_client_secret
+# if [ -z "$TF_VAR_arm_client_secret" ]
+# then
+#   printf "Environment variable 'TF_VAR_arm_client_secret' must be set.\n"
+#   usage
+# fi
 
-# Validate service principal
-arm_client_display_name=$(az ad sp show --id $arm_client_id --query "appDisplayName" --output tsv)
+# # Validate service principal
+# arm_client_display_name=$(az ad sp show --id $arm_client_id --query "appDisplayName" --output tsv)
 
-if [ -n "$arm_client_display_name" ]
-then 
-  printf "Found service principal '$arm_client_display_name'...\n"
-else
-  printf "Invalid service principal AppId '$arm_client_id'...\n"
-  usage
-fi
+# if [ -n "$arm_client_display_name" ]
+# then 
+#   printf "Found service principal '$arm_client_display_name'...\n"
+# else
+#   printf "Invalid service principal AppId '$arm_client_id'...\n"
+#   usage
+# fi
 
 # Validate subscription
 subscription_name=$(az account list --query "[?id=='$subscription_id'].name" --output tsv)

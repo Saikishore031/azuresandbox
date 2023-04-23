@@ -88,7 +88,8 @@ resource "azurerm_windows_virtual_machine" "vm_devops_win" {
 
 data "azurerm_subnet" "subnet" {
   name = "default"
-  virtual_network_name = "POC01"
+  virtual_network_name = "AKS-PROD-VNET"
+  resource_group_name  = "POC01"
 }
 # Nic
 resource "azurerm_network_interface" "vm_devops_win_nic" {

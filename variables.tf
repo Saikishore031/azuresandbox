@@ -17,7 +17,7 @@ variable "admin_password_secret" {
 variable "admin_username_secret" {
    type        = string
    description = "The name of the key vault secret containing the admin username"
-   defualt     = "bootstrap"
+   default     = "bootstrap"
 }
 
 variable "arm_client_id" {
